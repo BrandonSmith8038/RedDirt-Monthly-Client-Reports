@@ -7,17 +7,16 @@ from keys import MANAGE_WP_PASSWORD
 from keys import MANAGE_WP_USERNAME
 # Import The Time Class
 import time
-# Array Of WebSite Names
-sites = ['BEAUTIFUL BENNETT SPHYNX', 'Justin Sports Medical Team',
-         'Turquoise Circuit Finals Rodeo']
-# URL TO Browse To
-url = 'https://orion.managewp.com/login'
-# Orion UserName
-userName = MANAGE_WP_USERNAME
-# Orion Password
-password = MANAGE_WP_PASSWORD
-# Load The Chrome WebDriver
-for site in sites:
+
+
+def getClientReport(siteName):
+    # URL TO Browse To
+    url = 'https://orion.managewp.com/login'
+    # Orion UserName
+    userName = MANAGE_WP_USERNAME
+    # Orion Password
+    password = MANAGE_WP_PASSWORD
+    # Load The Chrome WebDriver
     driver = webdriver.Chrome('/usr/bin/chromedriver')
     # Browse To The Orion Site
     driver.get(url)
@@ -34,12 +33,12 @@ for site in sites:
     # Find The Icon To Take You To The Website Selection and Click It
     driver.find_element_by_class_name('icon-websites2').click()
     # Find The Correct Website
-    siteName = '//div[@data-test-site-name="{}"]'.format(site)
+    siteName = '//div[@data-test-site-name="{}"]'.format(siteName)
     ######## USE THIS ONE IF GRABBING MULTIPLE SITES #####
     #mainDiv = driver.find_element_by_xpath(siteName)
     ####### USE THIS ONE IF GRABBING A SINGLE SITE #######
-        mainDiv = driver.find_element_by_xpath(
-            '//div[@data-test-site-name="Justin Sports Medical Team"]')
+    mainDiv = driver.find_element_by_xpath(
+        '//div[@data-test-site-name="Justin Sports Medical Team"]')
     # #Hover Over That Div To Reveal The Icons
     hover = ActionChains(driver).move_to_element(mainDiv)
     hover.perform()
