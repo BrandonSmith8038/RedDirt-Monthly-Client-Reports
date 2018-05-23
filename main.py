@@ -1,12 +1,14 @@
 #!/usr/bin/env python
+import os
 import time
+from merge import merge
 from clientReport import getClientReport
 from getToggleReport import getToggleReport
 from getAnalyticsReport import getAnalyticReport
 from fileSystem import FileSystem
 
 
-class Site:
+class Site():
     def __init__(self, name, manageWpDiv, togglID):
         self.name = name
         self.manageWpDiv = manageWpDiv
@@ -30,16 +32,22 @@ class Site:
         # Wait 5 Seconds
         time.sleep(5)
         # Rename The File And Move It
-        self.renameAndMoveFile('Client Report')
+        self.renameAndMoveFile('Client Report.pdf')
 
     def togglReport(self):
         # Get The Toggl Report
         getToggleReport(self.togglID)
         # Rename The File And Move It
-        self.renameAndMoveFile('Content Updates')
+        self.renameAndMoveFile('Content Updates.pdf')
 
-    def analyticsReport(self):
-        getAnalyticReport(self.name)
+    def createReports(self):
+        self.createMainFolder()
+        self.createMonthFolder()
+        self.clientReport()
+        self.togglReport()
+
+    def mergePDFs(self):
+        merge(self.name)
 
 
 jst = Site(
@@ -51,27 +59,37 @@ bbs = Site(
     'Beautiful Bennett Sphynx',
     'BEAUTIFUL BENNETT SPHYNX',
     '54422761'
-
 )
 
-jst.analyticsReport()
+
+def createReports():
+    jst.createReports()
+    bbs.createReports()
 
 
-# # Creates The Main Folder
-# bbs.createMainFolder()
-# # Creates A Folder For The Current Month
-# bbs.createMonthFolder()
-# # Downloads The Client Report From Managewp
-# bbs.togglReport()
-# # Downs The Content UpDates Report From Toggl
-# bbs.clientReport()
+def mergeReports():
+    jst.mergePDFs()
+    bbs.mergePDFs()
 
 
-# # Creates The Main Folder
-# jst.createMainFolder()
-# # Creates A Folder For The Current Month
-# jst.createMonthFolder()
-# # Downloads The Client Report From Managewp
-# jst.clientReport()
-# # Downs The Content UpDates Report From Toggl
-# jst.togglReport()
+def main():
+    os.system('clear')
+    print('')
+    print('1: Create Folders and Reports')
+    print('2: Merge Folders')
+    print('')
+    print('')
+    choice = input('Please Choose An Option: ')
+    print('User Chose: {}').format(choice)
+    if choice == 1:
+        print('Creating Reports....')
+        createReports()
+        print('Finished')
+    elif choice == 2:
+        mergeReports()
+    else:
+        print('You Must Enter Either 1 Or Two')
+        main()
+
+
+main()

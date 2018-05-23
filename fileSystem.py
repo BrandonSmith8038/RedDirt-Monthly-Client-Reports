@@ -15,6 +15,7 @@ class FileSystem():
         self.downloadsFolder = '/home/cowboy8038/Downloads/'
 
     def createMainFolder(self):
+        print 'Creating The Main Folder'
         if not os.path.exists(self.mainFolder):
             try:
                 os.makedirs(self.mainFolder, 0o700)
@@ -23,6 +24,7 @@ class FileSystem():
                     raise
 
     def createMonthFolder(self):
+        print 'Creating The Month Folder In The Main Folder'
         if not os.path.exists(self.monthFolder):
             try:
                 os.makedirs(self.monthFolder, 0o700)
@@ -31,6 +33,7 @@ class FileSystem():
                     raise
 
     def renameAndMoveFile(self, newFileName):
+        print 'Moving File From Downloads To Month Folder'
         path = self.downloadsFolder
         filenames = os.listdir(path)
         # os.rename('{}*.pdf'.format(self.downloadsFolder),
